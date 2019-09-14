@@ -1,2 +1,2 @@
 # Virtual-machines
-Simple virtual machine service
+Simple virtual machine com.pashov.service
