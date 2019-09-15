@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "virtual_machines")
@@ -25,7 +26,6 @@ public class VirtualMachine {
     private int memory; // in MB
     @OneToOne
     private Disk disk;
-//    @OneToMany
-//    @Column(name = "network_id")
-//    private List<Network> networks;
+    @OneToMany(mappedBy = "virtualMachine")
+    private Set<Network> networks;
 }

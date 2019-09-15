@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -58,7 +60,7 @@ public class VirtualMachineController {
     @PutMapping("/{id}/networks")
     @ResponseStatus(NO_CONTENT)
     public void attachDisk(@PathVariable int id,
-                           @RequestBody List<Network> networks) {
+                           @RequestBody Set<Network> networks) {
         virtualMachineService.attachNetworks(id, networks);
     }
 }

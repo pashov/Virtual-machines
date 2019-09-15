@@ -5,6 +5,7 @@ import com.pashov.model.Network;
 import com.pashov.model.VirtualMachine;
 
 import java.util.List;
+import java.util.Set;
 
 public interface VirtualMachineService {
     List<VirtualMachine> getAll();
@@ -19,5 +20,5 @@ public interface VirtualMachineService {
 
     void attachDisk(int id, Disk disk);
 
-    void attachNetworks(int id, List<Network> networks);
+    void attachNetworks(int id, Set<Network> networks);
 }

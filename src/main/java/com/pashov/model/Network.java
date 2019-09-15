@@ -20,4 +20,7 @@ public class Network {
     private String name;
     @Column(name = "data")
     private String data;
+    @ManyToOne()
+    @JoinColumn(name="virtual_machine_id", nullable=false)
+    private VirtualMachine virtualMachine;
 }
