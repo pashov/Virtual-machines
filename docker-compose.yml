@@ -10,11 +10,9 @@ services:
       - 5432:5432
 
   virtual-machines-app:
-    image: pashov/virtual-machines
+    image: pashov/application
     depends_on:
       - postgres-db
-    environment:
-      JAVA_OPTS: "-Dspring.datasource.url=jdbc:postgresql://postgres-db:5432/postgres"
     ports:
       - 8080:8080
 
