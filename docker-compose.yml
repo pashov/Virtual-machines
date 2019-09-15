@@ -1,0 +1,20 @@
+version: '3.1'
+
+services:
+  postgres-db:
+    image: pashov/postgres-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pass
+    ports:
+      - 5432:5432
+
+  virtual-machines-app:
+    image: pashov/virtual-machines
+    depends_on:
+      - postgres-db
+    environment:
+      JAVA_OPTS: "-Dspring.datasource.url=jdbc:postgresql://postgres-db:5432/postgres"
+    ports:
+      - 8080:8080
+
