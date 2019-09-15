@@ -9,15 +9,15 @@ import java.util.List;
 public interface VirtualMachineService {
     List<VirtualMachine> getAll();
 
-    VirtualMachine get(String id);
+    VirtualMachine get(int id);
 
     void create(VirtualMachine virtualMachine);
 
-    void update(String id, VirtualMachine updatedVirtualMachine);
+    void update(VirtualMachine updatedVirtualMachine);
 
-    void delete(String id);
+    void delete(int id);
 
-    void attachDisk(String id, Disk disk);
+    void attachDisk(int id, Disk disk);
 
-    void attachNetworks(String id, List<Network> networks);
+    void attachNetworks(int id, List<Network> networks);
 }

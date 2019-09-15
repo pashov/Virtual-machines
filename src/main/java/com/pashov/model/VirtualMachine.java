@@ -2,18 +2,30 @@ package com.pashov.model;
 
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
+@Table(name = "virtual_machines")
 @Getter
 @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 public class VirtualMachine {
-    private String id;
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "CPU")
     private double CPU; // in MHz
+    @Column(name = "memory")
     private int memory; // in MB
+    @OneToOne
     private Disk disk;
-    private List<Network> networks;
+//    @OneToMany
+//    @Column(name = "network_id")
+//    private List<Network> networks;
 }

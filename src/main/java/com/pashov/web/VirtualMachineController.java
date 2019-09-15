@@ -26,7 +26,7 @@ public class VirtualMachineController {
 
     @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(OK)
-    public VirtualMachine get(@PathVariable String id) {
+    public VirtualMachine get(@PathVariable int id) {
         return virtualMachineService.get(id);
     }
 
@@ -36,29 +36,28 @@ public class VirtualMachineController {
         virtualMachineService.create(virtualMachine);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("")
     @ResponseStatus(NO_CONTENT)
-    public void update(@PathVariable String id,
-                       @RequestBody VirtualMachine virtualMachine) {
-        virtualMachineService.update(id, virtualMachine);
+    public void update(@RequestBody VirtualMachine virtualMachine) {
+        virtualMachineService.update(virtualMachine);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void delete(@PathVariable String id) {
+    public void delete(@PathVariable int id) {
         virtualMachineService.delete(id);
     }
 
     @PutMapping("/{id}/disk")
     @ResponseStatus(NO_CONTENT)
-    public void attachDisk(@PathVariable String id,
+    public void attachDisk(@PathVariable int id,
                            @RequestBody Disk disk) {
         virtualMachineService.attachDisk(id, disk);
     }
 
     @PutMapping("/{id}/networks")
     @ResponseStatus(NO_CONTENT)
-    public void attachDisk(@PathVariable String id,
+    public void attachDisk(@PathVariable int id,
                            @RequestBody List<Network> networks) {
         virtualMachineService.attachNetworks(id, networks);
     }

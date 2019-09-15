@@ -9,6 +9,7 @@ import com.pashov.repository.VirtualMachineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,11 +30,11 @@ public class VirtualMachineServiceImpl implements VirtualMachineService {
 
     @Override
     public List<VirtualMachine> getAll() {
-        return (List<VirtualMachine>) virtualMachineRepository.findAll();
+        return virtualMachineRepository.findAll();
     }
 
     @Override
-    public VirtualMachine get(String id) {
+    public VirtualMachine get(int id) {
         Optional<VirtualMachine> virtualMachine = virtualMachineRepository.findById(id);
         if(virtualMachine.isPresent()) {
             return virtualMachine.get();
@@ -47,22 +48,26 @@ public class VirtualMachineServiceImpl implements VirtualMachineService {
     }
 
     @Override
-    public void update(String id, VirtualMachine updatedVirtualMachine) {
-
+    public void update(VirtualMachine updatedVirtualMachine) {
+        virtualMachineRepository.save(updatedVirtualMachine);
     }
 
+    @Transactional
     @Override
-    public void delete(String id) {
+    public void delete(int id) {
         virtualMachineRepository.deleteById(id);
     }
 
     @Override
-    public void attachDisk(String id, Disk disk) {
+    public void attachDisk(int id, Disk disk) {
         diskRepository.save(disk);
+        VirtualMachine virtualMachine = get(id);
+        virtualMachine.setDisk(disk);
+        virtualMachineRepository.save(virtualMachine);
     }
 
     @Override
-    public void attachNetworks(String id, List<Network> networks) {
+    public void attachNetworks(int id, List<Network> networks) {
         networkRepository.saveAll(networks);
     }
 }
