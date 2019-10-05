@@ -1,14 +1,13 @@
 package com.pashov.web;
 
-import com.pashov.model.Disk;
-import com.pashov.model.Network;
-import com.pashov.model.VirtualMachine;
+import com.pashov.dao.Disk;
+import com.pashov.dao.Network;
+import com.pashov.dao.VirtualMachine;
 import com.pashov.service.VirtualMachineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import static org.springframework.http.HttpStatus.*;
@@ -50,17 +49,17 @@ public class VirtualMachineController {
         virtualMachineService.delete(id);
     }
 
-    @PutMapping("/{id}/disk")
+    @PutMapping("/{id}/disks")
     @ResponseStatus(NO_CONTENT)
     public void attachDisk(@PathVariable int id,
-                           @RequestBody Disk disk) {
-        virtualMachineService.attachDisk(id, disk);
+                           @RequestBody Set<Disk> disks) {
+        virtualMachineService.attachDisk(id, disks);
     }
 
     @PutMapping("/{id}/networks")
     @ResponseStatus(NO_CONTENT)
-    public void attachDisk(@PathVariable int id,
-                           @RequestBody Set<Network> networks) {
+    public void attachNetworks(@PathVariable int id,
+                               @RequestBody Set<Network> networks) {
         virtualMachineService.attachNetworks(id, networks);
     }
 }

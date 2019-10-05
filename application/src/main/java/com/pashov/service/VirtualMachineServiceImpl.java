@@ -1,8 +1,9 @@
 package com.pashov.service;
 
-import com.pashov.model.Disk;
-import com.pashov.model.Network;
-import com.pashov.model.VirtualMachine;
+import com.pashov.exception.BusinessRuleException;
+import com.pashov.dao.Disk;
+import com.pashov.dao.Network;
+import com.pashov.dao.VirtualMachine;
 import com.pashov.repository.DiskRepository;
 import com.pashov.repository.NetworkRepository;
 import com.pashov.repository.VirtualMachineRepository;
@@ -36,17 +37,23 @@ public class VirtualMachineServiceImpl implements VirtualMachineService {
 
     @Override
     public VirtualMachine get(int id) {
-        Optional<VirtualMachine> virtualMachine = virtualMachineRepository.findById(id);
-        if (virtualMachine.isPresent()) {
-            return virtualMachine.get();
-        }
-        throw new RuntimeException("No virtual machine with such id");
+        return virtualMachineRepository.findById(id)
+                .orElseThrow(() -> new BusinessRuleException(String.format("No VM with id: %d exists", id)));
     }
 
     @Override
     public void create(VirtualMachine virtualMachine) {
+        Optional<VirtualMachine> virtualMachineById = getOptional(virtualMachine.getId());
+        if (virtualMachineById.isPresent()) {
+            throw new BusinessRuleException(String.format("Virtual machine with id: %d already exists", virtualMachine.getId()));
+        }
         virtualMachineRepository.save(virtualMachine);
     }
+
+    private Optional<VirtualMachine> getOptional(int id) {
+        return virtualMachineRepository.findById(id);
+    }
+
 
     @Override
     public void update(VirtualMachine updatedVirtualMachine) {
@@ -60,10 +67,13 @@ public class VirtualMachineServiceImpl implements VirtualMachineService {
     }
 
     @Override
-    public void attachDisk(int id, Disk disk) {
-        diskRepository.save(disk);
+    public void attachDisk(int id, Set<Disk> disks) {
+        if (disks.size() < 1) {
+            throw new BusinessRuleException("Minimum disks size is 1");
+        }
+        diskRepository.saveAll(disks);
         VirtualMachine virtualMachine = get(id);
-        virtualMachine.setDisk(disk);
+        virtualMachine.getDisks().addAll(disks);
         virtualMachineRepository.save(virtualMachine);
     }
 
@@ -71,8 +81,7 @@ public class VirtualMachineServiceImpl implements VirtualMachineService {
     public void attachNetworks(int id, Set<Network> networks) {
         networkRepository.saveAll(networks);
         VirtualMachine virtualMachine = get(id);
-        virtualMachine.setNetworks(networks);
-        //virtualMachine.getNetworks().addAll(networks);
+        virtualMachine.getNetworks().addAll(networks);
         virtualMachineRepository.save(virtualMachine);
     }
 }

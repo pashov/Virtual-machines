@@ -1,6 +1,6 @@
 package com.pashov.repository;
 
-import com.pashov.model.VirtualMachine;
+import com.pashov.dao.VirtualMachine;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,9 +1,9 @@
-package com.pashov.model;
+package com.pashov.dao;
 
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Collections;
 import java.util.Set;
 
 @Entity
@@ -24,8 +24,10 @@ public class VirtualMachine {
     private double CPU; // in MHz
     @Column(name = "memory")
     private int memory; // in MB
-    @OneToOne
-    private Disk disk;
-    @OneToMany(mappedBy = "virtualMachine")
-    private Set<Network> networks;
+    @OneToMany
+    @JoinColumn(name = "virtual_machine_id")
+    private Set<Disk> disks = Collections.emptySet();
+    @OneToMany
+    @JoinColumn(name = "virtual_machine_id")
+    private Set<Network> networks = Collections.emptySet();
 }
