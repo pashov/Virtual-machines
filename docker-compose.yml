@@ -2,7 +2,7 @@ version: '3.1'
 
 services:
   postgres-db:
-    image: pashov/postgres-db
+    build: ./postgres-db
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: pass
@@ -10,7 +10,7 @@ services:
       - 5432:5432
 
   virtual-machines-app:
-    image: pashov/application
+    build: .
     depends_on:
       - postgres-db
     ports:

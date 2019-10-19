@@ -9,7 +9,6 @@
 
   <modules>
     <module>application</module>
-    <module>postgres-db</module>
   </modules>
 
     <properties>
