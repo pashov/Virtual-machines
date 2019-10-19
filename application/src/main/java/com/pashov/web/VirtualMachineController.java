@@ -1,6 +1,5 @@
 package com.pashov.web;
 
-import com.pashov.dao.Disk;
 import com.pashov.dao.Network;
 import com.pashov.dao.VirtualMachine;
 import com.pashov.service.VirtualMachineService;
@@ -49,17 +48,17 @@ public class VirtualMachineController {
         virtualMachineService.delete(id);
     }
 
-    @PutMapping("/{id}/disks")
+    @PutMapping("/{virtualMachineId}/disks")
     @ResponseStatus(NO_CONTENT)
-    public void attachDisk(@PathVariable int id,
-                           @RequestBody Set<Disk> disks) {
-        virtualMachineService.attachDisk(id, disks);
+    public void attachDisk(@PathVariable int virtualMachineId,
+                           @RequestBody Set<Integer> diskIds) {
+        virtualMachineService.attachDisks(virtualMachineId, diskIds);
     }
 
-    @PutMapping("/{id}/networks")
+    @PutMapping("/{virtualMachineId}/networks")
     @ResponseStatus(NO_CONTENT)
-    public void attachNetworks(@PathVariable int id,
-                               @RequestBody Set<Network> networks) {
-        virtualMachineService.attachNetworks(id, networks);
+    public void attachNetworks(@PathVariable int virtualMachineId,
+                               @RequestBody Set<Integer> networkIds) {
+        virtualMachineService.attachNetworks(virtualMachineId, networkIds);
     }
 }

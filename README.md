@@ -53,7 +53,5 @@ Remote debug port: `6006`
 
 ## TODOs
 
-- Make controllers for `Disk` & `Network`
-- Make the `attach` methods attach only already existing disks/networks
 - Remove migration scrips and use Liquibase
 - Make network/disk attaching endpoints reactive?

@@ -1,7 +1,5 @@
 package com.pashov.service;
 
-import com.pashov.dao.Disk;
-import com.pashov.dao.Network;
 import com.pashov.dao.VirtualMachine;
 
 import java.util.List;
@@ -18,7 +16,7 @@ public interface VirtualMachineService {
 
     void delete(int id);
 
-    void attachDisk(int id, Set<Disk> disk);
+    void attachDisks(int virtualMachineId, Set<Integer> diskIds);
 
-    void attachNetworks(int id, Set<Network> networks);
+    void attachNetworks(int virtualMachineId, Set<Integer> networkIds);
 }
